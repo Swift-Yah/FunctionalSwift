@@ -8,7 +8,7 @@ struct Position {
     let x: Double
     let y: Double
 
-    // MARK: Computed variaaa
+    // MARK: Computed variables
 
     var length: Double {
         return sqrt(x * x + y * y)
