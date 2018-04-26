@@ -66,3 +66,5 @@ struct Ship {
         return targetDistance <= firingRange && targetDistance > unsafeRange && friendlyDistance > unsafeRange
     }
 }
+
+typealias Region = (Position) -> Bool
