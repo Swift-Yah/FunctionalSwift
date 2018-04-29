@@ -68,3 +68,33 @@ struct Ship {
 }
 
 typealias Region = (Position) -> Bool
+
+func circle(radius: Distance) -> Region {
+    return { point in point.length <= radius }
+}
+
+func circle(radius: Distance, center: Position) -> Region {
+    return { point in point.minus(center).length <= radius }
+}
+
+func shift(_ region: @escaping Region, by offset: Position) -> Region {
+    return { point in region(point.minus(offset)) }
+}
+
+func invert(_ region: @escaping Region) -> Region {
+    return { point in !region(point) }
+}
+
+func intersect(_ region: @escaping Region, with other: @escaping Region) -> Region {
+    return { point in region(point) && other(point) }
+}
+
+func union(_ region: @escaping Region, with other: @escaping Region) -> Region {
+    return { point in region(point) || other(point) }
+}
+
+func subtract(_ region: @escaping Region, from original: @escaping Region) -> Region {
+    return intersect(original, with: invert(region))
+}
+
+let shifted = shift(circle(radius: 10), by: Position(x: 5, y: 5))
