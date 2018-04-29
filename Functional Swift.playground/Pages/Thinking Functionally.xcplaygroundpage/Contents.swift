@@ -65,6 +65,15 @@ struct Ship {
 
         return targetDistance <= firingRange && targetDistance > unsafeRange && friendlyDistance > unsafeRange
     }
+
+    func canSafeEngageFunctional(ship target: Ship, friendly: Ship) -> Bool {
+        let rangeRegion = subtract(circle(radius: unsafeRange), from: circle(radius: firingRange))
+        let firingRegion = shift(rangeRegion, by: position)
+        let friendlyRegion = shift(circle(radius: unsafeRange), by: friendly.position)
+        let resultRegion = subtract(friendlyRegion, from: firingRange)
+
+        return resultRegion(target.position)
+    }
 }
 
 typealias Region = (Position) -> Bool
